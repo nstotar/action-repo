@@ -14,7 +14,7 @@ load_dotenv()
 class DataDisplaySystem:
     def __init__(self):
         self.repo_model = RepositoryDataModel()
-        self.last_check_time = datetime.utcnow() - timedelta(minutes=1)  # Start with 1 minute ago
+        self.last_check_time = datetime.utcnow() - timedelta(seconds=15)  # Start with 15 seconds ago
         self.poll_interval = 15  # seconds
         self.running = False
         
@@ -107,11 +107,10 @@ class DataDisplaySystem:
                     print(f"\n🔔 New data detected at {datetime.utcnow().strftime('%H:%M:%S')}")
                     print(self.format_display_data(new_data))
                 else:
-                    # Show a heartbeat message every minute
+                    # Show a heartbeat message every 15 seconds
                     current_time = datetime.utcnow()
-                    if current_time.second < self.poll_interval:
-                        print(f"⏰ {current_time.strftime('%H:%M:%S')} - Monitoring for changes...")
-                
+                    print(f"⏰ {current_time.strftime('%H:%M:%S')} - Monitoring for changes...")
+
                 # Wait for next poll
                 time.sleep(self.poll_interval)
                 
