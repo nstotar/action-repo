@@ -1,0 +1,17 @@
+{
+  "name": "action-repo",
+  "version": "1.0.0",
+  "description": "GitHub Actions repository for webhook testing with MongoDB integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webhook-test": "node webhook-test.js"
+  },
+  "keywords": ["github-actions", "webhook", "testing", "mongodb"],
+  "author": "nstotar",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.5.0"
+  }
+}

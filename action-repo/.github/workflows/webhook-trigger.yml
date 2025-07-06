@@ -1,0 +1,58 @@
+name: Webhook Trigger
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  webhook-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run webhook test
+      run: |
+        echo "🚀 GitHub Actions workflow triggered!"
+        echo "Event: ${{ github.event_name }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "Author: ${{ github.actor }}"
+        
+    - name: Test webhook endpoint (if available)
+      run: |
+        echo "Testing webhook functionality..."
+        if [ -f "webhook-test.js" ]; then
+          echo "Running webhook test script..."
+          node webhook-test.js
+        else
+          echo "No webhook test script found"
+        fi
+      continue-on-error: true
+      
+    - name: Display repository info
+      run: |
+        echo "📊 Repository Information:"
+        echo "- Name: ${{ github.repository }}"
+        echo "- Event: ${{ github.event_name }}"
+        echo "- Ref: ${{ github.ref }}"
+        echo "- SHA: ${{ github.sha }}"
+        echo "- Actor: ${{ github.actor }}"
+        echo "- Workflow: ${{ github.workflow }}"
+        echo "- Job: ${{ github.job }}"
+        echo "- Run ID: ${{ github.run_id }}"
+        echo "- Run Number: ${{ github.run_number }}"
