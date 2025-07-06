@@ -20,12 +20,12 @@ repo_model = RepositoryDataModel()
 
 def verify_signature(payload_body, signature_header):
     """Verify GitHub webhook signature"""
-    if not signature_header:
-        return False
-    
     secret = os.getenv('GITHUB_WEBHOOK_SECRET', '')
     if not secret:
         return True  # Skip verification if no secret is set
+
+    if not signature_header:
+        return False
     
     hash_object = hmac.new(
         secret.encode('utf-8'),

@@ -77,7 +77,7 @@ class MongoDBConnection:
             collection_name = os.getenv('MONGODB_COLLECTION', 'repository_data')
         
         db = self.get_database(db_name)
-        if db:
+        if db is not None:
             return db[collection_name]
         return None
     
